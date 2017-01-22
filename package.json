@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.22.0",
+    "babel-runtime": "^6.22.0",
     "load-script": "^1.0.0",
     "ramda": "^0.23.0"
   }
