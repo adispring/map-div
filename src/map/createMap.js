@@ -1,3 +1,5 @@
+/* eslint consistent-return: 0, no-unused-expressions: 0, no-console: 0 */
+
 import R from 'ramda';
 import amapLoader from './amapLoader';
 
@@ -10,7 +12,7 @@ const initMapInstance = (mapId) => new Promise((resolve) => {
   AMap.event.addListener(mapInstance, 'complete', () => resolve(mapInstance));
 });
 
-export const createMap = async (divId, amapKey) => {
+const createMap = async (amapKey, divId) => {
   try {
     await loadMap(amapKey);
     const initedMap = await initMapInstance(divId);
@@ -20,3 +22,4 @@ export const createMap = async (divId, amapKey) => {
   }
 };
 
+export default createMap;

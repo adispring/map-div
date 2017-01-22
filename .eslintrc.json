@@ -3,6 +3,7 @@
   "env": {
     "browser": true
   },
+  "parser": "babel-eslint",
   "rules": {
     "strict": 0,
     "no-underscore-dangle": ["error", { "allow": ["__"] }],
