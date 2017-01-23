@@ -3,7 +3,8 @@
 
 const path = require('path');
 const config = require('./config');
-const HtmlwebpackPlugin = require('html-webpack-plugin');
+const libify = require.resolve('webpack-libify');
+// const HtmlwebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
@@ -23,7 +24,7 @@ module.exports = {
         include: path.join(config.basedir, 'src'),
         loader: 'babel-loader',
         query: {
-          presets: ['es2015', 'stage-0', 'stage-3'],
+          presets: ['es2015'],
           plugins: [
             'transform-runtime',
             'transform-async-to-generator',
@@ -31,9 +32,14 @@ module.exports = {
         },
       },
     ],
+    postLoaders: [
+      {
+        loader: libify,
+      },
+    ],
   },
   plugins: [
-    new HtmlwebpackPlugin(),
+//    new HtmlwebpackPlugin(),
   ],
   watch: true,
 };

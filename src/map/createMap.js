@@ -13,13 +13,9 @@ const initMapInstance = (mapId) => new Promise((resolve) => {
 });
 
 const createMap = async (amapKey, divId) => {
-  try {
-    await loadMap(amapKey);
-    const initedMap = await initMapInstance(divId);
-    return initedMap;
-  } catch (err) {
-    console.log(err);
-  }
+  await loadMap(amapKey);
+  const initedMap = await initMapInstance(divId);
+  return initedMap;
 };
 
 export default createMap;

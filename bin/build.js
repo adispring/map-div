@@ -27,7 +27,6 @@ const onStats = (err, stats) => {
   }
 };
 
-webpack(webpackConfig[0]).run((err, stats) => {
+webpack(webpackConfig).run((err, stats) => {
   onStats(err, stats);
-  webpack(webpackConfig[1]).run(onStats);
 });

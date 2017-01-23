@@ -2,10 +2,11 @@
   "name": "amap-div",
   "version": "0.0.1",
   "description": "amap instance attach on div",
-  "main": "dist/createMap.bundle.js",
+  "main": "lib/map/createMap",
   "scripts": {
     "start": "node ./worker",
     "build": "NODE_ENV=production node bin/build",
+    "prepublish": "npm run build",
     "test": "eslint . --fix && node test/ | faucet"
   },
   "repository": {
@@ -13,7 +14,8 @@
     "url": "ssh://git@github.com:adispring/amap-div"
   },
   "keywords": [
-    "amap"
+    "amap",
+    "div"
   ],
   "author": {
     "name": "wangzengdi",
@@ -25,9 +27,8 @@
     "babel-eslint": "^7.1.1",
     "babel-loader": "^6.2.10",
     "babel-plugin-transform-async-to-generator": "^6.16.0",
+    "babel-polyfill": "^6.22.0",
     "babel-preset-es2015": "^6.18.0",
-    "babel-preset-stage-0": "^6.16.0",
-    "babel-preset-stage-3": "^6.17.0",
     "eslint": "^2.13.1",
     "eslint-config-airbnb": "^9.0.1",
     "eslint-plugin-import": "^1.10.0",
@@ -37,10 +38,10 @@
     "html-webpack-plugin": "^2.26.0",
     "tape": "^4.6.0",
     "webpack": "^1.14.0",
-    "webpack-dev-server": "^1.14.1"
+    "webpack-dev-server": "^1.14.1",
+    "webpack-libify": "^1.1.2"
   },
   "dependencies": {
-    "babel-polyfill": "^6.22.0",
     "babel-runtime": "^6.22.0",
     "load-script": "^1.0.0",
     "ramda": "^0.23.0"
