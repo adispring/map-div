@@ -14,7 +14,7 @@ const initMapInstance = (mapDivId, mapOpts) => new Promise((resolve) => {
 
 const createMap = async (mapConfigs, mapDivId) => {
   await loadMap(mapConfigs);
-  const initedMap = await initMapInstance(R.prop('initOpts', mapConfigs), mapDivId);
+  const initedMap = await initMapInstance(mapDivId, R.prop('initOpts', mapConfigs));
   return initedMap;
 };
 

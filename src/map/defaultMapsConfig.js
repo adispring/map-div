@@ -9,14 +9,13 @@ const defaultMapsConfig = {
   },
   GMap: {
     name: 'GMap',
-    // url: '//maps.google.cn/maps/api/js',
-    url: '//maps.googleapis.com/maps/api/js',
+    url: '//maps.google.cn/maps/api/js',
+    // url: '//maps.googleapis.com/maps/api/js',
     key: 'AIzaSyDknh-uMiYKdpFLhHGSggLKE-iTLPPu_jE',
     version: 3,
     mapInstancePath: ['google', 'maps'],
     initOpts: {
       center: { lat: 39.916527, lng: 108.407159 },
-      // center: {lat: -34.397, lng: 150.644},
       zoom: 6,
     },
   },

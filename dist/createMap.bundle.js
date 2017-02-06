@@ -8253,7 +8253,7 @@
 	
 	          case 2:
 	            _context.next = 4;
-	            return initMapInstance(_ramda2.default.prop('initOpts', mapConfigs), mapDivId);
+	            return initMapInstance(mapDivId, _ramda2.default.prop('initOpts', mapConfigs));
 	
 	          case 4:
 	            initedMap = _context.sent;
@@ -21429,11 +21429,11 @@
 	  callbacks.length = 0;
 	};
 	
-	var mapLoader = function mapLoader(mapOpts, cb) {
-	  var opts = _ramda2.default.merge(mapOpts, _defaultMapsConfig2.default[mapOpts.name]);
-	  var url = opts.url,
-	      version = opts.version,
-	      key = opts.key;
+	var mapLoader = function mapLoader(mapConfig, cb) {
+	  var config = _ramda2.default.merge(mapConfig, _defaultMapsConfig2.default[mapConfig.name]);
+	  var url = config.url,
+	      version = config.version,
+	      key = config.key;
 	
 	  callbacks.push(cb);
 	
@@ -21444,7 +21444,7 @@
 	    (function () {
 	      var mapCallback = 'mapCallback' + Date.now();
 	      window[mapCallback] = function () {
-	        window.map = _ramda2.default.path(opts.mapInstancePath, window);
+	        window.map = _ramda2.default.path(config.mapInstancePath, window);
 	        done(null, window.map);
 	        delete window[mapCallback];
 	      };
