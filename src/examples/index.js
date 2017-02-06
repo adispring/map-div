@@ -5,8 +5,8 @@ const component = id => {
   div.style.height = '500px';
   return div;
 };
-document.body.appendChild(component('amapId'));
+document.body.appendChild(component('mapId'));
 
 import createMap from '../map/createMap';
-import amapKey from './amapKey';
-const map = createMap(amapKey, 'amapId').then(console.log);
+import mapKey from './mapKey';
+const map = createMap(mapKey, 'mapId').then(console.log);
