@@ -8229,7 +8229,7 @@
 	    });
 	  });
 	};
-	var initMapInstance = function initMapInstance(mapOpts, mapDivId) {
+	var initMapInstance = function initMapInstance(mapDivId, mapOpts) {
 	  return new _promise2.default(function (resolve) {
 	    var _window = window,
 	        map = _window.map;

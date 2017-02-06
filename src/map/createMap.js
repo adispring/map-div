@@ -6,7 +6,7 @@ import mapLoader from './mapLoader';
 const loadMap = (mapConfigs) => new Promise((resolve, reject) =>
   mapLoader(mapConfigs, (err, data) => (R.isNil(err) ? resolve(data) : reject(err)))
 );
-const initMapInstance = (mapOpts, mapDivId) => new Promise((resolve) => {
+const initMapInstance = (mapDivId, mapOpts) => new Promise((resolve) => {
   const { map } = window;
   const mapInstance = new map.Map(document.getElementById(mapDivId), mapOpts);
   map.event.addListener(mapInstance, 'complete', () => resolve(mapInstance));
