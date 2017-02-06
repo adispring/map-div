@@ -1,4 +1,4 @@
-/* eslint no-unused-vars: 0, no-console: 0 */
+/* eslint no-unused-vars: 0 */
 /* eslint no-param-reassign: 0 */
 import R from 'ramda';
 
@@ -11,7 +11,6 @@ const component = id => {
 document.body.appendChild(component('mapId'));
 
 import createMap from '../map/createMap';
-import mapsConfigs from '../map/defaultMapsConfig';
 
 function getRandomIntInclusive(min, max) {
   min = Math.ceil(min);
@@ -24,6 +23,5 @@ const toMapName = R.compose(
   R.addIndex(R.map)((val, index) => [index, val])
 )(['AMap', 'GMap', 'QMap']);
 
-const map = createMap(mapsConfigs[toMapName[getRandomIntInclusive(0, 2)]], 'mapId')
-  .then(console.log);
+const map = createMap({ name: toMapName[getRandomIntInclusive(0, 2)] }, 'mapId');
 

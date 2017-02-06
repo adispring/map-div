@@ -8218,9 +8218,11 @@
 	
 	var _mapLoader2 = _interopRequireDefault(_mapLoader);
 	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	var _defaultMapsConfig = __webpack_require__(678);
 	
-	/* eslint consistent-return: 0, no-unused-expressions: 0, no-console: 0 */
+	var _defaultMapsConfig2 = _interopRequireDefault(_defaultMapsConfig);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var loadMap = function loadMap(mapConfigs) {
 	  return new _promise2.default(function (resolve, reject) {
@@ -8228,7 +8230,8 @@
 	      return _ramda2.default.isNil(err) ? resolve(data) : reject(err);
 	    });
 	  });
-	};
+	}; /* eslint consistent-return: 0, no-unused-expressions: 0, no-console: 0 */
+	
 	var initMapInstance = function initMapInstance(mapDivId, mapOpts) {
 	  return new _promise2.default(function (resolve) {
 	    var _window = window,
@@ -8242,24 +8245,25 @@
 	};
 	
 	var createMap = function () {
-	  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(mapConfigs, mapDivId) {
-	    var initedMap;
+	  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(mapConfig, mapDivId) {
+	    var config, initedMap;
 	    return _regenerator2.default.wrap(function _callee$(_context) {
 	      while (1) {
 	        switch (_context.prev = _context.next) {
 	          case 0:
-	            _context.next = 2;
-	            return loadMap(mapConfigs);
+	            config = _ramda2.default.merge(_defaultMapsConfig2.default[mapConfig.name], mapConfig);
+	            _context.next = 3;
+	            return loadMap(config);
 	
-	          case 2:
-	            _context.next = 4;
-	            return initMapInstance(mapDivId, _ramda2.default.prop('initOpts', mapConfigs));
+	          case 3:
+	            _context.next = 5;
+	            return initMapInstance(mapDivId, config.initOpts);
 	
-	          case 4:
+	          case 5:
 	            initedMap = _context.sent;
 	            return _context.abrupt('return', initedMap);
 	
-	          case 6:
+	          case 7:
 	          case 'end':
 	            return _context.stop();
 	        }
@@ -21415,10 +21419,6 @@
 	
 	var _loadScript2 = _interopRequireDefault(_loadScript);
 	
-	var _defaultMapsConfig = __webpack_require__(678);
-	
-	var _defaultMapsConfig2 = _interopRequireDefault(_defaultMapsConfig);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var callbacks = [];
@@ -21430,10 +21430,9 @@
 	};
 	
 	var mapLoader = function mapLoader(mapConfig, cb) {
-	  var config = _ramda2.default.merge(mapConfig, _defaultMapsConfig2.default[mapConfig.name]);
-	  var url = config.url,
-	      version = config.version,
-	      key = config.key;
+	  var url = mapConfig.url,
+	      version = mapConfig.version,
+	      key = mapConfig.key;
 	
 	  callbacks.push(cb);
 	
@@ -21444,7 +21443,7 @@
 	    (function () {
 	      var mapCallback = 'mapCallback' + Date.now();
 	      window[mapCallback] = function () {
-	        window.map = _ramda2.default.path(config.mapInstancePath, window);
+	        window.map = _ramda2.default.path(mapConfig.mapInstancePath, window);
 	        done(null, window.map);
 	        delete window[mapCallback];
 	      };
@@ -21552,14 +21551,13 @@
 	  },
 	  GMap: {
 	    name: 'GMap',
-	    // url: '//maps.google.cn/maps/api/js',
-	    url: '//maps.googleapis.com/maps/api/js',
+	    url: '//maps.google.cn/maps/api/js',
+	    // url: '//maps.googleapis.com/maps/api/js',
 	    key: 'AIzaSyDknh-uMiYKdpFLhHGSggLKE-iTLPPu_jE',
 	    version: 3,
 	    mapInstancePath: ['google', 'maps'],
 	    initOpts: {
 	      center: { lat: 39.916527, lng: 108.407159 },
-	      // center: {lat: -34.397, lng: 150.644},
 	      zoom: 6
 	    }
 	  },

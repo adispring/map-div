@@ -2,6 +2,7 @@
 
 import R from 'ramda';
 import mapLoader from './mapLoader';
+import defaultMapsConfig from './defaultMapsConfig';
 
 const loadMap = (mapConfigs) => new Promise((resolve, reject) =>
   mapLoader(mapConfigs, (err, data) => (R.isNil(err) ? resolve(data) : reject(err)))
@@ -12,9 +13,10 @@ const initMapInstance = (mapDivId, mapOpts) => new Promise((resolve) => {
   map.event.addListener(mapInstance, 'complete', () => resolve(mapInstance));
 });
 
-const createMap = async (mapConfigs, mapDivId) => {
-  await loadMap(mapConfigs);
-  const initedMap = await initMapInstance(mapDivId, R.prop('initOpts', mapConfigs));
+const createMap = async (mapConfig, mapDivId) => {
+  const config = R.merge(defaultMapsConfig[mapConfig.name], mapConfig);
+  await loadMap(config);
+  const initedMap = await initMapInstance(mapDivId, config.initOpts);
   return initedMap;
 };
 
