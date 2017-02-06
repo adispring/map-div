@@ -3,18 +3,18 @@
 import R from 'ramda';
 import mapLoader from './mapLoader';
 
-const loadMap = (mapKey) => new Promise((resolve, reject) =>
-  mapLoader(mapKey, err => (R.isNil(err) ? resolve() : reject(err)))
+const loadMap = (mapConfigs) => new Promise((resolve, reject) =>
+  mapLoader(mapConfigs, (err, data) => (R.isNil(err) ? resolve(data) : reject(err)))
 );
-const initMapInstance = (mapId) => new Promise((resolve) => {
+const initMapInstance = (mapOpts, mapDivId) => new Promise((resolve) => {
   const { map } = window;
-  const mapInstance = new window.map.Map(document.getElementById(mapId));
+  const mapInstance = new map.Map(document.getElementById(mapDivId), mapOpts);
   map.event.addListener(mapInstance, 'complete', () => resolve(mapInstance));
 });
 
-const createMap = async (mapKey, divId) => {
-  await loadMap(mapKey);
-  const initedMap = await initMapInstance(divId);
+const createMap = async (mapConfigs, mapDivId) => {
+  await loadMap(mapConfigs);
+  const initedMap = await initMapInstance(R.prop('initOpts', mapConfigs), mapDivId);
   return initedMap;
 };
 

@@ -1,6 +1,6 @@
 import R from 'ramda';
 import loadScript from 'load-script';
-import defaultMapsOpts from './defaultMapsOpts';
+import defaultMapsConfig from './defaultMapsConfig';
 
 const callbacks = [];
 const done = (err, map) => {
@@ -9,7 +9,7 @@ const done = (err, map) => {
 };
 
 const mapLoader = (mapOpts, cb) => {
-  const opts = R.merge(mapOpts, defaultMapsOpts);
+  const opts = R.merge(mapOpts, defaultMapsConfig[mapOpts.name]);
   const { url, version, key } = opts;
   callbacks.push(cb);
 
@@ -19,6 +19,7 @@ const mapLoader = (mapOpts, cb) => {
   } else if (callbacks.length <= 1) {
     const mapCallback = `mapCallback${Date.now()}`;
     window[mapCallback] = () => {
+      window.map = R.path(opts.mapInstancePath, window);
       done(null, window.map);
       delete window[mapCallback];
     };
@@ -26,8 +27,6 @@ const mapLoader = (mapOpts, cb) => {
     loadScript(src, (err) => {
       if (err) {
         done(err);
-      } else {
-        window.map = R.path(opts.mapInstancePath, window[opts.name]);
       }
     });
   }

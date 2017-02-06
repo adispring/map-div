@@ -38,9 +38,9 @@ module.exports = {
       },
     ],
   },
-  plugins: [
+//  plugins: [
 //    new HtmlwebpackPlugin(),
-  ],
+//  ],
   watch: true,
 };
 

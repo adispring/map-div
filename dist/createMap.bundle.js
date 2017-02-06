@@ -8214,46 +8214,46 @@
 	
 	var _ramda2 = _interopRequireDefault(_ramda);
 	
-	var _amapLoader = __webpack_require__(676);
+	var _mapLoader = __webpack_require__(676);
 	
-	var _amapLoader2 = _interopRequireDefault(_amapLoader);
+	var _mapLoader2 = _interopRequireDefault(_mapLoader);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	/* eslint consistent-return: 0, no-unused-expressions: 0, no-console: 0 */
 	
-	var loadMap = function loadMap(amapKey) {
+	var loadMap = function loadMap(mapConfigs) {
 	  return new _promise2.default(function (resolve, reject) {
-	    return (0, _amapLoader2.default)(amapKey, function (err) {
-	      return _ramda2.default.isNil(err) ? resolve() : reject(err);
+	    return (0, _mapLoader2.default)(mapConfigs, function (err, data) {
+	      return _ramda2.default.isNil(err) ? resolve(data) : reject(err);
 	    });
 	  });
 	};
-	var initMapInstance = function initMapInstance(mapId) {
+	var initMapInstance = function initMapInstance(mapOpts, mapDivId) {
 	  return new _promise2.default(function (resolve) {
 	    var _window = window,
-	        AMap = _window.AMap;
+	        map = _window.map;
 	
-	    var mapInstance = new AMap.Map(mapId);
-	    AMap.event.addListener(mapInstance, 'complete', function () {
+	    var mapInstance = new map.Map(document.getElementById(mapDivId), mapOpts);
+	    map.event.addListener(mapInstance, 'complete', function () {
 	      return resolve(mapInstance);
 	    });
 	  });
 	};
 	
 	var createMap = function () {
-	  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(amapKey, divId) {
+	  var _ref = (0, _asyncToGenerator3.default)(_regenerator2.default.mark(function _callee(mapConfigs, mapDivId) {
 	    var initedMap;
 	    return _regenerator2.default.wrap(function _callee$(_context) {
 	      while (1) {
 	        switch (_context.prev = _context.next) {
 	          case 0:
 	            _context.next = 2;
-	            return loadMap(amapKey);
+	            return loadMap(mapConfigs);
 	
 	          case 2:
 	            _context.next = 4;
-	            return initMapInstance(divId);
+	            return initMapInstance(_ramda2.default.prop('initOpts', mapConfigs), mapDivId);
 	
 	          case 4:
 	            initedMap = _context.sent;
@@ -21407,43 +21407,59 @@
 	  value: true
 	});
 	
+	var _ramda = __webpack_require__(367);
+	
+	var _ramda2 = _interopRequireDefault(_ramda);
+	
 	var _loadScript = __webpack_require__(677);
 	
 	var _loadScript2 = _interopRequireDefault(_loadScript);
 	
+	var _defaultMapsConfig = __webpack_require__(678);
+	
+	var _defaultMapsConfig2 = _interopRequireDefault(_defaultMapsConfig);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	var callbacks = [];
-	var done = function done(err, AMap) {
+	var done = function done(err, map) {
 	  callbacks.forEach(function (fn) {
-	    return fn(err, AMap);
+	    return fn(err, map);
 	  });
 	  callbacks.length = 0;
 	};
 	
-	var amapLoader = function amapLoader(amapKey, cb) {
+	var mapLoader = function mapLoader(mapOpts, cb) {
+	  var opts = _ramda2.default.merge(mapOpts, _defaultMapsConfig2.default[mapOpts.name]);
+	  var url = opts.url,
+	      version = opts.version,
+	      key = opts.key;
+	
 	  callbacks.push(cb);
 	
 	  if (typeof window === 'undefined') return;
-	  if (typeof window.AMap !== 'undefined') {
-	    done(null, window.AMap);
+	  if (typeof window.map !== 'undefined') {
+	    done(null, window.map);
 	  } else if (callbacks.length <= 1) {
 	    (function () {
-	      var amapCallback = 'amapCallback' + Date.now();
-	      window[amapCallback] = function () {
-	        done(null, window.AMap);
-	        delete window[amapCallback];
+	      var mapCallback = 'mapCallback' + Date.now();
+	      window[mapCallback] = function () {
+	        window.map = _ramda2.default.path(opts.mapInstancePath, window);
+	        done(null, window.map);
+	        delete window[mapCallback];
 	      };
-	      var src = '//webapi.amap.com/maps?v=1.3&key=' + amapKey + '&callback=' + amapCallback;
+	      var src = url + '?v=' + version + '&key=' + key + '&callback=' + mapCallback;
 	      (0, _loadScript2.default)(src, function (err) {
-	        if (err) done(err);
+	        if (err) {
+	          done(err);
+	        }
 	      });
 	    })();
 	  }
 	  // AMap === undefined && callbacks.length > 1 Callbacks should wait until AMap is ready
 	};
 	
-	exports.default = amapLoader;
+	exports.default = mapLoader;
 
 /***/ },
 /* 677 */
@@ -21515,6 +21531,48 @@
 	  }
 	}
 
+
+/***/ },
+/* 678 */
+/***/ function(module, exports) {
+
+	'use strict';
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	// name 和 key 是必填项，以确定 map 的类型和使用者的身份。传入信息会覆盖默认信息
+	var defaultMapsConfig = {
+	  AMap: {
+	    name: 'AMap',
+	    url: '//webapi.amap.com/maps',
+	    key: 'baadfb049b6ba924a674eea5cec4100f',
+	    version: '1.3',
+	    mapInstancePath: ['AMap']
+	  },
+	  GMap: {
+	    name: 'GMap',
+	    // url: '//maps.google.cn/maps/api/js',
+	    url: '//maps.googleapis.com/maps/api/js',
+	    key: 'AIzaSyDknh-uMiYKdpFLhHGSggLKE-iTLPPu_jE',
+	    version: 3,
+	    mapInstancePath: ['google', 'maps'],
+	    initOpts: {
+	      center: { lat: 39.916527, lng: 108.407159 },
+	      // center: {lat: -34.397, lng: 150.644},
+	      zoom: 6
+	    }
+	  },
+	  QMap: {
+	    name: 'QMap',
+	    url: '//map.qq.com/api/js',
+	    key: '5P7BZ-DAMK5-YFWID-QC3QI-HSMD2-4SBUD',
+	    version: '2',
+	    mapInstancePath: ['qq', 'maps']
+	  }
+	};
+	
+	exports.default = defaultMapsConfig;
 
 /***/ }
 /******/ ]);

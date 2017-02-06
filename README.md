@@ -43,15 +43,31 @@ const src = `//webapi.amap.com/maps?v=1.3&key=${amapKey}&callback=${amapCallback
 
 方法：
 
-1. 修改 webpack.config.js 的 entry：
+1. 修改 webpack.config.js 
 
 ```js
+1. 
+
+// const libify = require.resolve('webpack-libify');
+const HtmlwebpackPlugin = require('html-webpack-plugin');
+
+2.
   entry: {
     index: ['babel-polyfill', require.resolve('./src/examples/index')],
 //    createMap: ['babel-polyfill', require.resolve('./src/map/createMap')],
   },
-```
 
+3.
+//    postLoaders: [
+//      {
+//        loader: libify,
+//      },
+//    ],
+  },
+  plugins: [
+    new HtmlwebpackPlugin(),
+  ],
+```
 2. http 调试
 
 - 方法1
