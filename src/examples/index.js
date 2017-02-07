@@ -6,6 +6,7 @@ const component = id => {
   const div = document.createElement('div');
   div.id = id;
   div.style.height = '500px';
+  div.style.minWidth = '800px';
   return div;
 };
 document.body.appendChild(component('mapId'));

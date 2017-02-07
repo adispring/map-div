@@ -9,6 +9,12 @@
 import createMap from 'map-div';
 
 createMap(mapConfig, divId).then(map => { do something with initialized map instance });
+
+/* using map global Class: 
+1. window.XMap / XMap
+2. or map native syntax:
+   AMap: AMap; QMap: qq.maps; GMap: google.maps.
+*/
 ```
 
 2. createMap 函数说明：
@@ -25,14 +31,18 @@ createMap(mapConfig, divId).then(map => { do something with initialized map inst
     包含地图实例的 Promise。
     ```
 
-3. 不同地图的 mapConfig 格式以及使用说明如下，三种地图的 mapConfig 格式如下所示，：
+3. mapConfig 格式以及使用说明如下：
 ```js
 const defaultMapsConfig = {
   AMap: {
     name: 'AMap', // 地图的类型，（此为高德地图）required
     url: '//webapi.amap.com/maps', // optional
     key: 'YOUR_AMAP_API_KEY', // 您申请的地图应用的 API_KEY，required
-    version: '1.3', // 地图版本 // optional
+    version: '1.3', // 地图版本, optional
+    initOpts: { // 初始化参数。注意，不同地图参数格式不一样，optional（google 地图 required）
+      center: [116.396776, 39.917549],
+      zoom: 11,
+    },
     mapInstancePath: ['AMap'], // Don't modify this property!!!
   },
   GMap: {
@@ -40,11 +50,11 @@ const defaultMapsConfig = {
     url: '//maps.google.cn/maps/api/js',
     key: 'YOUR_GOOGLE_MAP_API_KEY',
     version: 3,
-    mapInstancePath: ['google', 'maps'],
-    initOpts: {
-      center: { lat: 39.916527, lng: 108.407159 },
-      zoom: 6,
+    initOpts: { // 初始化参数，仅对于 Google 地图，下面两个参数是必须的。
+      center: { lat: 39.917549, lng: 116.396776 },
+      zoom: 11,
     },
+    mapInstancePath: ['google', 'maps'],
   },
   QMap: {
     name: 'QMap', // 腾讯地图

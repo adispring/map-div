@@ -7,18 +7,18 @@ const done = (err, map) => {
   callbacks.length = 0;
 };
 
-const mapLoader = (mapConfig, cb) => {
-  const { url, version, key } = mapConfig;
+const mapLoader = (Config, cb) => {
+  const { url, version, key } = Config;
   callbacks.push(cb);
 
   if (typeof window === 'undefined') return;
-  if (typeof window.map !== 'undefined') {
-    done(null, window.map);
+  if (typeof window.XMap !== 'undefined') {
+    done(null, window.XMap);
   } else if (callbacks.length <= 1) {
     const mapCallback = `mapCallback${Date.now()}`;
     window[mapCallback] = () => {
-      window.map = R.path(mapConfig.mapInstancePath, window);
-      done(null, window.map);
+      window.XMap = R.path(Config.mapInstancePath, window);
+      done(null, window.XMap);
       delete window[mapCallback];
     };
     const src = `${url}?v=${version}&key=${key}&callback=${mapCallback}`;
