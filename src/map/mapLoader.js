@@ -1,5 +1,6 @@
 import R from 'ramda';
 import loadScript from 'load-script';
+import qs from 'querystring';
 
 const callbacks = [];
 const done = (err, map) => {
@@ -8,7 +9,7 @@ const done = (err, map) => {
 };
 
 const mapLoader = (Config, cb) => {
-  const { url, version, key } = Config;
+  const { url, version, key, query } = Config;
   callbacks.push(cb);
 
   if (typeof window === 'undefined') return;
@@ -21,7 +22,7 @@ const mapLoader = (Config, cb) => {
       done(null, window.XMap);
       delete window[mapCallback];
     };
-    const src = `${url}?v=${version}&key=${key}&callback=${mapCallback}`;
+    const src = `${url}?v=${version}&key=${key}&callback=${mapCallback}&${qs.stringify(query)}`;
     loadScript(src, (err) => {
       if (err) {
         done(err);

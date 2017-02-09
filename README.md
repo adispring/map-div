@@ -35,13 +35,16 @@ createMap(mapConfig, divId).then(map => { do something with initialized map inst
 ```js
 const defaultMapsConfig = {
   AMap: {
-    name: 'AMap', // 地图的类型，（此为高德地图）required
+    name: 'AMap', // 地图的类型，（此为高德地图）, required
     url: '//webapi.amap.com/maps', // optional
     key: 'YOUR_AMAP_API_KEY', // 您申请的地图应用的 API_KEY，required
     version: '1.3', // 地图版本, optional
     initOpts: { // 初始化参数。注意，不同地图参数格式不一样，optional（google 地图 required）
       center: [116.396776, 39.917549],
       zoom: 11,
+    },
+    query: { // url 上的其他参数加载在此，如 plugin, optional
+      plugin: 'AMap.Geocoder',
     },
     mapInstancePath: ['AMap'], // Don't modify this property!!!
   },
