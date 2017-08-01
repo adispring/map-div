@@ -7,8 +7,6 @@ const config = require('./config');
 const libify = require.resolve('webpack-libify');
 const HtmlwebpackPlugin = require('html-webpack-plugin');
 
-console.log(process.env.NODE_ENV);
-
 const commonPart = {
   output: {
     path: config.outputdir,
@@ -61,8 +59,6 @@ const finalConfig = R.compose(
   R.mergeDeepRight(commonPart),
   R.ifElse(R.equals('production'), R.always(productionPart), R.always(developPart))
 )(process.env.NODE_ENV);
-
-console.log(JSON.stringify(finalConfig));
 
 module.exports = finalConfig;
 
