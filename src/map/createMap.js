@@ -10,7 +10,7 @@ const loadMap = (Config) => new Promise((resolve, reject) =>
 const initMapInstance = (DivId, Opts) => new Promise((resolve) => {
   const { XMap } = window;
   const mapInstance = new XMap.Map(document.getElementById(DivId), Opts);
-  XMap.event.addListener(mapInstance, 'complete', () => resolve(mapInstance));
+  resolve(mapInstance);
 });
 
 const createMap = async (Config, DivId) => {

@@ -24,5 +24,5 @@ const toMapName = R.compose(
   R.addIndex(R.map)((val, index) => [index, val])
 )(['AMap', 'GMap', 'QMap']);
 
-const map = createMap({ name: toMapName[getRandomIntInclusive(0, 2)] }, 'mapId');
+const map = createMap({ name: toMapName[getRandomIntInclusive(0, 2)] }, 'mapId').then(console.log);
 
