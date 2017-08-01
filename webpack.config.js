@@ -1,16 +1,15 @@
 /* eslint no-console: 0 */
 // http://jamesknelson.com/webpack-made-simple-build-es6-less-with-autorefresh-in-26-lines/
 
+const R = require('ramda');
 const path = require('path');
 const config = require('./config');
 const libify = require.resolve('webpack-libify');
-// const HtmlwebpackPlugin = require('html-webpack-plugin');
+const HtmlwebpackPlugin = require('html-webpack-plugin');
 
-module.exports = {
-  entry: {
-//    index: ['babel-polyfill', require.resolve('./src/examples/index')],
-    createMap: ['babel-polyfill', require.resolve('./src/map/createMap')],
-  },
+console.log(process.env.NODE_ENV);
+
+const commonPart = {
   output: {
     path: config.outputdir,
     publicPath: config.publicPath,
@@ -32,17 +31,40 @@ module.exports = {
         },
       },
     ],
+  },
+};
+
+const productionPart = {
+  entry: {
+    createMap: ['babel-polyfill', require.resolve('./src/map/createMap')],
+  },
+  module: {
     postLoaders: [
       {
         loader: libify,
       },
     ],
   },
-//  plugins: [
-//    new HtmlwebpackPlugin(),
-//  ],
+};
+
+const developPart = {
+  entry: {
+    index: ['babel-polyfill', require.resolve('./src/examples/index')],
+  },
+  plugins: [
+    new HtmlwebpackPlugin(),
+  ],
   watch: true,
 };
+
+const finalConfig = R.compose(
+  R.mergeDeepRight(commonPart),
+  R.ifElse(R.equals('production'), R.always(productionPart), R.always(developPart))
+)(process.env.NODE_ENV);
+
+console.log(JSON.stringify(finalConfig));
+
+module.exports = finalConfig;
 
 if (require.main === module) {
   console.info(module.exports);
