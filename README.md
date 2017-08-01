@@ -94,33 +94,6 @@ const src = `${url}?v=${version}&key=${key}&callback=${mapCallback}`;
 
 方法：
 
-1. 修改 webpack.config.js 
-
-```js
-1. 
-
-// const libify = require.resolve('webpack-libify');
-const HtmlwebpackPlugin = require('html-webpack-plugin');
-
-2.
-  entry: {
-    index: ['babel-polyfill', require.resolve('./src/examples/index')],
-//    createMap: ['babel-polyfill', require.resolve('./src/map/createMap')],
-  },
-
-3.
-//    postLoaders: [
-//      {
-//        loader: libify,
-//      },
-//    ],
-  },
-  plugins: [
-    new HtmlwebpackPlugin(),
-  ],
-```
-2. http 调试
-
 ```console
 $ webpack-dev-server
 ```
@@ -131,39 +104,13 @@ $ webpack-dev-server
 
 ## 打包、发布 npm
 
-1. 修改 webpack.config.js 
-
-```js
-1. 
-
-const libify = require.resolve('webpack-libify');
-// const HtmlwebpackPlugin = require('html-webpack-plugin');
-
-2.
-  entry: {
-//    index: ['babel-polyfill', require.resolve('./src/examples/index')],
-    createMap: ['babel-polyfill', require.resolve('./src/map/createMap')],
-  },
-
-3.
-    postLoaders: [
-      {
-        loader: libify,
-      },
-    ],
-  },
-//  plugins: [
-//    new HtmlwebpackPlugin(),
-//  ],
-```
-
-2. 打包
+1. 打包
 
 ```console
 $ npm run build
 ```
 
-3. 发布
+2. 发布
 
 ```console
 $ npm publish 
