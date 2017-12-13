@@ -30,6 +30,13 @@ const defaultMapsConfig = {
     version: '2',
     mapInstancePath: ['qq', 'maps'],
   },
+  BMap: {
+    name: 'BMap',
+    url: '//api.map.baidu.com/api',
+    key: 'sOGPcGGAouF9uDiCLGXtNKPcKhhgOrHN',
+    version: '2.0',
+    mapInstancePath: ['BMap'],
+  },
 };
 
 export default defaultMapsConfig;

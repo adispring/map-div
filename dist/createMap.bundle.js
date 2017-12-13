@@ -22044,6 +22044,13 @@
 	    key: '5P7BZ-DAMK5-YFWID-QC3QI-HSMD2-4SBUD',
 	    version: '2',
 	    mapInstancePath: ['qq', 'maps']
+	  },
+	  BMap: {
+	    name: 'BMap',
+	    url: '//api.map.baidu.com/api',
+	    ak: 'sOGPcGGAouF9uDiCLGXtNKPcKhhgOrHN',
+	    v: '2',
+	    mapInstancePath: ['BMap']
 	  }
 	};
 	
