@@ -21729,12 +21729,17 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
-	var callbacks = [];
+	var callbacks = []; /* eslint max-len : 0 */
+	
 	var done = function done(err, map) {
 	  callbacks.forEach(function (fn) {
 	    return fn(err, map);
 	  });
 	  callbacks.length = 0;
+	};
+	var isBMap = _ramda2.default.equals('BMap');
+	var keyName = function keyName(name) {
+	  return isBMap(name) ? 'ak' : 'key';
 	};
 	
 	var mapLoader = function mapLoader(Config, cb) {
@@ -21755,7 +21760,7 @@
 	      done(null, window.XMap);
 	      delete window[mapCallback];
 	    };
-	    var src = url + '?v=' + version + '&key=' + key + '&callback=' + mapCallback + '&' + _querystring2.default.stringify(query);
+	    var src = url + '?v=' + version + '&' + keyName(Config.name) + '=' + key + '&callback=' + mapCallback + '&' + _querystring2.default.stringify(query);
 	    (0, _loadScript2.default)(src, function (err) {
 	      if (err) {
 	        done(err);
@@ -22048,8 +22053,8 @@
 	  BMap: {
 	    name: 'BMap',
 	    url: '//api.map.baidu.com/api',
-	    ak: 'sOGPcGGAouF9uDiCLGXtNKPcKhhgOrHN',
-	    v: '2',
+	    key: 'sOGPcGGAouF9uDiCLGXtNKPcKhhgOrHN',
+	    version: '2.0',
 	    mapInstancePath: ['BMap']
 	  }
 	};
