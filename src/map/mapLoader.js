@@ -1,3 +1,4 @@
+/* eslint max-len : 0 */
 import R from 'ramda';
 import loadScript from 'load-script';
 import qs from 'querystring';
@@ -7,6 +8,8 @@ const done = (err, map) => {
   callbacks.forEach(fn => fn(err, map));
   callbacks.length = 0;
 };
+const isBMap = R.equals('BMap');
+const keyName = name => (isBMap(name) ? 'ak' : 'key');
 
 const mapLoader = (Config, cb) => {
   const { url, version, key, query } = Config;
@@ -22,7 +25,7 @@ const mapLoader = (Config, cb) => {
       done(null, window.XMap);
       delete window[mapCallback];
     };
-    const src = `${url}?v=${version}&key=${key}&callback=${mapCallback}&${qs.stringify(query)}`;
+    const src = `${url}?v=${version}&${keyName(Config.name)}=${key}&callback=${mapCallback}&${qs.stringify(query)}`;
     loadScript(src, (err) => {
       if (err) {
         done(err);

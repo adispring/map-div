@@ -3,7 +3,7 @@
 
 ## 使用
 
-1. 兼容高德、腾讯、Google 地图
+1. 兼容高德、腾讯、Google 地图、百度地图
 
 ```js
 import createMap from 'map-div';
@@ -13,7 +13,7 @@ createMap(mapConfig, divId).then(map => { do something with initialized map inst
 /* using map global Class: 
 1. window.XMap / XMap
 2. or map native syntax:
-   AMap: AMap; QMap: qq.maps; GMap: google.maps.
+   AMap: AMap; QMap: qq.maps; GMap: google.maps; BMap: BMap.
 */
 ```
 
@@ -66,6 +66,14 @@ const defaultMapsConfig = {
     version: '2',
     mapInstancePath: ['qq', 'maps'],
   },
+  BMap: {
+    name: 'BMap',
+    url: '//api.map.baidu.com/api',
+    key: 'sOGPcGGAouF9uDiCLGXtNKPcKhhgOrHN',
+    version: '2.0',
+    mapInstancePath: ['BMap'],
+  },
+}
 ```
 
 4. 库中使用了 ES2017 的 async 和 await，只是对文件进行了简单的 babel 转换，所以可能要在引入该库的工程中加入相应的转换插件和依赖库。
