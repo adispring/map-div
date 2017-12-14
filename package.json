@@ -1,6 +1,6 @@
 {
   "name": "map-div",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "map instance attach on div",
   "main": "lib/map/createMap",
   "scripts": {
